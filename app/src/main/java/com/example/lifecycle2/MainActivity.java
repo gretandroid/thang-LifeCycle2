@@ -1,14 +1,12 @@
 package com.example.lifecycle2;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends LogableActivity {
+
+    public static final String KEY = "key";
 
     private MyApplication app;
 
@@ -17,11 +15,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         app = (MyApplication) getApplication();
-        Toast.makeText(this, app.getChain(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, app.getChain(), Toast.LENGTH_LONG).show();
     }
 
     public void onClickButton(View view) {
-        app.setChain("Mai") ;
-        Log.d("chain", app.getChain());
+//        app.setChain("Mai") ;
+//        Log.d("chain", app.getChain());
+
+        // Create an intent, i.e. a signal
+        Intent intent = new Intent(this, SecondActivity.class);
+
+        // init message
+        intent.putExtra(KEY, "Hello Thang");
+
+        startActivity(intent);
     }
+
 }
