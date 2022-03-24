@@ -32,12 +32,18 @@ public class MainActivity extends LogableActivity {
         // NOTE : avoid instantiate directly by new DataModel() to ensure model
         // is not destroyed with activity
         model = new ViewModelProvider(this).get(DataModel.class);
-        String name = model.getName();
-        if (name != null) {
-            Toast.makeText(this, name, Toast.LENGTH_LONG).show();
-        }
+//        String name = model.getName();
+//        if (name != null) {
+//            Toast.makeText(this, name, Toast.LENGTH_LONG).show();
+//        }
 
-        show();
+//        show();
+
+        // On met en place des observers qui vont observer les modifs sur
+        // les MutableLiveData, qui indique comment MAJ les TextView
+        model.getName().observe(this, value -> nameTextView.setText(value));
+        model.getFirstName().observe(this, value -> firstNameTextView.setText(value));
+        model.getAge().observe(this, value -> ageTextView.setText(String.valueOf(value)));
     }
 
     public void onClickButton(View view) {
@@ -54,15 +60,15 @@ public class MainActivity extends LogableActivity {
 
         // ViewModel
         model.process();
-        show();
+//        show();
 
     }
 
     public void show() {
 
-        nameTextView.setText(model.getName());
-        firstNameTextView.setText(model.getFirstName());
-        ageTextView.setText(String.valueOf(model.getAge()));
+//        nameTextView.setText(model.getName().getValue());
+//        firstNameTextView.setText(model.getFirstName().getValue());
+//        ageTextView.setText(String.valueOf(model.getAge().getValue()));
     }
 
 }
