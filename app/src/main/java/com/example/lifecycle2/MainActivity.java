@@ -3,6 +3,8 @@ package com.example.lifecycle2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,11 +14,15 @@ public class MainActivity extends LogableActivity {
 
     private MyApplication app;
     private DataModel model;
+    private TextView nameTextView, firstNameTextView, ageTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        nameTextView = findViewById(R.id.nameTextView);
+        firstNameTextView = findViewById(R.id.firstNameTextView);
+        ageTextView = findViewById(R.id.ageTextView);
 
         app = (MyApplication) getApplication();
         app.setConnection("Connection MyApplication");
@@ -26,6 +32,12 @@ public class MainActivity extends LogableActivity {
         // NOTE : avoid instantiate directly by new DataModel() to ensure model
         // is not destroyed with activity
         model = new ViewModelProvider(this).get(DataModel.class);
+        String name = model.getName();
+        if (name != null) {
+            Toast.makeText(this, name, Toast.LENGTH_LONG).show();
+        }
+
+        show();
     }
 
     public void onClickButton(View view) {
@@ -33,12 +45,24 @@ public class MainActivity extends LogableActivity {
 //        Log.d("chain", app.getChain());
 
         // Create an intent, i.e. a signal
-        Intent intent = new Intent(this, SecondActivity.class);
+//        Intent intent = new Intent(this, SecondActivity.class);
 
         // init message
-        intent.putExtra(KEY, "Hello Thang");
+//        intent.putExtra(KEY, "Hello Thang");
 
-        startActivity(intent);
+//        startActivity(intent);
+
+        // ViewModel
+        model.process();
+        show();
+
+    }
+
+    public void show() {
+
+        nameTextView.setText(model.getName());
+        firstNameTextView.setText(model.getFirstName());
+        ageTextView.setText(String.valueOf(model.getAge()));
     }
 
 }

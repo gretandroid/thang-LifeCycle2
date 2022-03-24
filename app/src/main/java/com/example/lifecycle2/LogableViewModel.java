@@ -12,6 +12,5 @@ public abstract class LogableViewModel extends ViewModel implements Logable {
     protected void onCleared() {
         super.onCleared();
         Log.d(APP + this.getClass().getSimpleName(), "onCleared");
-
     }
 }
