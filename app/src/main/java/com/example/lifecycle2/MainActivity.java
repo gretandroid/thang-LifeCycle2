@@ -15,6 +15,7 @@ public class MainActivity extends LogableActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         app = (MyApplication) getApplication();
+        app.setConnection("Connection MyApplication");
 //        Toast.makeText(this, app.getChain(), Toast.LENGTH_LONG).show();
     }
 
